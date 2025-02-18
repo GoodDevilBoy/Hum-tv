@@ -1,0 +1,138 @@
+addEventListener('fetch', event => {
+  event.respondWith(
+    new Response(`
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Hum TV Drama Schedule - GoodDevilBoy02</title>
+          <style>
+              body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f4f4f4;
+                  color: #333;
+                  margin: 0;
+                  padding: 0;
+              }
+              header {
+                  background-color: #e50914;
+                  color: white;
+                  text-align: center;
+                  padding: 10px;
+              }
+              .container {
+                  margin: 20px;
+              }
+              table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin-bottom: 20px;
+              }
+              table, th, td {
+                  border: 1px solid #ddd;
+              }
+              th, td {
+                  padding: 10px;
+                  text-align: left;
+              }
+              th {
+                  background-color: #e50914;
+                  color: white;
+              }
+              .drama-title {
+                  font-weight: bold;
+              }
+              #current-time {
+                  font-weight: bold;
+              }
+          </style>
+      </head>
+      <body>
+
+      <header>
+          <h1>Hum TV Drama Schedule - GoodDevilBoy02</h1>
+      </header>
+
+      <div class="container">
+          <h2>Drama Schedule (Pakistani & Indian Time)</h2>
+
+          <table>
+              <thead>
+                  <tr>
+                      <th>Drama Title</th>
+                      <th>Day</th>
+                      <th>Pakistani Time</th>
+                      <th>Indian Time</th>
+                      <th>Current Time (Pakistan)</th>
+                      <th>Current Time (India)</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td class="drama-title">Judwaa</td>
+                      <td>Monday - Sunday</td>
+                      <td>9:00 PM</td>
+                      <td>9:30 PM</td>
+                      <td id="pakistan-time">Loading...</td>
+                      <td id="india-time">Loading...</td>
+                  </tr>
+                  <tr>
+                      <td class="drama-title">Meem Se Mohabbat</td>
+                      <td>Wednesday - Thursday</td>
+                      <td>8:00 PM</td>
+                      <td>8:30 PM</td>
+                      <td id="pakistan-time">Loading...</td>
+                      <td id="india-time">Loading...</td>
+                  </tr>
+                  <tr>
+                      <td class="drama-title">Hijr</td>
+                      <td>Friday</td>
+                      <td>8:00 PM</td>
+                      <td>8:30 PM</td>
+                      <td id="pakistan-time">Loading...</td>
+                      <td id="india-time">Loading...</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <footer style="background-color: #e50914; color: white; text-align: center; padding: 10px;">
+          <p>© 2025 GoodDevilBoy02 - All Rights Reserved</p>
+      </footer>
+
+      <script>
+          function formatAMPM(date) {
+              let hours = date.getHours();
+              let minutes = date.getMinutes();
+              let seconds = date.getSeconds();
+              let ampm = hours >= 12 ? 'PM' : 'AM';
+              hours = hours % 12;
+              hours = hours ? hours : 12; // 0 should be 12
+              minutes = minutes < 10 ? '0' + minutes : minutes;
+              seconds = seconds < 10 ? '0' + seconds : seconds;
+              let strTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+              return strTime;
+          }
+
+          function updateTime() {
+              const pakistanTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Karachi" });
+              const indiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+
+              document.getElementById("pakistan-time").innerHTML = formatAMPM(new Date(pakistanTime));
+              document.getElementById("india-time").innerHTML = formatAMPM(new Date(indiaTime));
+          }
+
+          setInterval(updateTime, 1000); // Update every second
+          updateTime(); // Initial call to populate current time immediately
+      </script>
+
+      </body>
+      </html>
+    `, {
+      headers: {
+        'Content-Type': 'text/html;charset=UTF-8'
+      }
+    })
+  );
+});
